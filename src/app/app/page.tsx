@@ -1,13 +1,9 @@
 "use client"
 
-import { Card, CardProps } from "@/components/Card";
+import { Card } from "@/components/Card";
 import { CardDataContext } from "@/components/context/CardDataContext";
 import { CreateCardArea } from "@/components/CreateCardArea";
 import { useContext, useState } from "react";
-
-interface CardData extends CardProps {
-  id: number
-}
 
 export default function Dashboard() {
 
@@ -19,7 +15,7 @@ export default function Dashboard() {
         {
           cardData.map(card => {
             return (
-              <Card key={card.id} title={card.title} content={card.content} />
+              <Card key={card.id} id={card.id} title={card.title} content={card.content} />
             )
           })
         }
