@@ -1,4 +1,6 @@
-import { ReactNode } from "react"
+"use client"
+
+import { FormEvent, ReactNode, useContext, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -13,14 +15,39 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "./ui/textarea"
+import { CardData, CardDataContext } from "./context/CardDataContext"
 
 interface CreateCardModalProps {
   children: ReactNode
+  setCardData: (cardData: CardData[]) => void
 }
 
 export function CreateCardModal({ children }: CreateCardModalProps) {
+
+  const [isOpen, setIsOpen] = useState(false)
+
+  const { cardData, setCardData } = useContext(CardDataContext)
+
+  const [newCardTitle, setNewCardTitle] = useState('')
+  const [newCardContent, setNewCardContent] = useState('')
+
+  function handleAddNewCard(event: FormEvent) {
+    event.preventDefault()
+    const newCardData = {
+      id: cardData.length + 1 + Math.random(),
+      title: newCardTitle,
+      content: newCardContent
+    }
+
+    setCardData([...cardData, newCardData])
+
+    setNewCardTitle('')
+    setNewCardContent('')
+    setIsOpen(false)
+  }
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
@@ -28,10 +55,10 @@ export function CreateCardModal({ children }: CreateCardModalProps) {
         <DialogHeader>
           <DialogTitle>Criar novo flashcard</DialogTitle>
           <DialogDescription>
-            Escreva o topíco e o texto que deseja memorizar. Após preencher clique em &apos;&apos;Criar&apos;&apos;.
+            Escreva o topíco e o texto que deseja memorizar. <br />Após preencher clique em &apos;&apos;Criar&apos;&apos;.
           </DialogDescription>
         </DialogHeader>
-        <form className="grid gap-4 py-4">
+        <form onSubmit={(event) => handleAddNewCard(event)} id="new-card-form" className="grid gap-4 py-4">
           <div className="flex flex-col gap-2">
             <Label className="ml-1" htmlFor="title">
               Título:
@@ -39,14 +66,22 @@ export function CreateCardModal({ children }: CreateCardModalProps) {
             <Input
               id="title"
               className="col-span-3"
+              onChange={(event) => setNewCardTitle(event.target.value)}
+              value={newCardTitle}
               required
             />
           </div>
           <div className="flex flex-col gap-2">
             <Label className="ml-1" htmlFor="text">
-              Texto:
+              Conteúdo:
             </Label>
-            <Textarea rows={6} id="text" className="col-span-3" required />
+            <Textarea
+              onChange={(event) => setNewCardContent(event.target.value)}
+              value={newCardContent}
+              rows={6} id="content"
+              className="col-span-3"
+              required
+            />
           </div>
           <DialogFooter>
             <Button type="submit">Criar</Button>

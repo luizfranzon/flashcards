@@ -1,0 +1,35 @@
+[data-flipped] {
+  transition: all 0.2s;
+  transform-style: preserve-3d;
+}
+
+[data-flipped=true] {
+  transform: rotateY(180deg);
+  
+}
+
+[data-flipped=false] {
+  transform: none
+}
+
+.front, .back {
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+	backface-visibility: hidden;
+
+	/* position: absolute;
+	top: 0;
+	left: 0; */
+}
+
+.front {
+	z-index: 2;
+}
+
+.back {
+	-webkit-transform: rotateY(180deg);
+	-moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+	transform: rotateY(180deg);
+}
