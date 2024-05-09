@@ -3,7 +3,6 @@
 import { Card } from "@/components/Card";
 import { CreateCardArea } from "@/components/CreateCardArea";
 import { useCardDataContext } from "@/context/CardDataContext";
-import { useEffect } from "react";
 
 export default function App() {
 
@@ -15,7 +14,12 @@ export default function App() {
         {
           cardData.map(card => {
             return (
-              <Card key={card.id} id={card.id} title={card.title} content={card.content} />
+              <Card
+                key={card.id}
+                id={card.id}
+                title={card.title}
+                content={card.content}
+              />
             )
           })
         }
