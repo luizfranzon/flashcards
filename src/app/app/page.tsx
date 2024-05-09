@@ -1,13 +1,13 @@
 "use client"
 
 import { Card } from "@/components/Card";
-import { CardDataContext } from "@/components/context/CardDataContext";
 import { CreateCardArea } from "@/components/CreateCardArea";
-import { useContext, useState } from "react";
+import { useCardDataContext } from "@/context/CardDataContext";
+import { useEffect } from "react";
 
-export default function Dashboard() {
+export default function App() {
 
-  const { cardData } = useContext(CardDataContext)
+  const { cardData } = useCardDataContext()
 
   return (
     <div className="max-w-7xl m-auto">

@@ -1,11 +1,12 @@
+"use client"
+
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { CreateCardModal } from "./CreateCardModal";
-import { CardDataContext } from "./context/CardDataContext";
-import { useContext } from "react";
+import { useCardDataContext } from "../context/CardDataContext";
 
 export function Header() {
-  const { cardData, setCardData } = useContext(CardDataContext)
+  const { setCardData } = useCardDataContext()
 
   return (
     <header className="border-b p-5">

@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { CreateCardModal } from "./CreateCardModal";
-import { CardDataContext } from "./context/CardDataContext";
+import { CardDataContext } from "../context/CardDataContext";
 
 export function CreateCardArea() {
 
-  const { cardData, setCardData } = useContext(CardDataContext)
+  const { setCardData } = useContext(CardDataContext)
 
   return (
     <CreateCardModal setCardData={setCardData}>
