@@ -49,7 +49,7 @@ export function Card({ title, content, id }: CardData) {
               isActive && (
                 <div className="back h-full border-2 rounded-lg p-4">
                   <ScrollArea className="h-full w-[390px] overflow-hidden">
-                    <p className="text-white break-words w-full select-none">
+                    <p className="text-white w-[95%] select-none whitespace-pre-wrap overflow-auto break-all">
                       {content}
                     </p>
                   </ScrollArea>

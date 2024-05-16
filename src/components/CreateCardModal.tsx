@@ -26,7 +26,6 @@ interface CreateCardModalProps {
 export function CreateCardModal({ children, isEdit = false }: CreateCardModalProps) {
 
   const [isOpen, setIsOpen] = useState(false)
-
   const { cardData, setCardData } = useContext(CardDataContext)
 
   const [newCardTitle, setNewCardTitle] = useState('')
