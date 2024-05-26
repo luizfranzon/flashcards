@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <div>
-      <Link href="/app">Home</Link>
+      <Link href="/app">🚧 Em contrução 🚧</Link>
     </div>
   )
 }
