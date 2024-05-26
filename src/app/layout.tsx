@@ -4,6 +4,9 @@ import '../styles/globals.css'
 
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
+import { CardDataProvider } from '@/context/CardDataContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,7 +27,13 @@ export default function RootLayout({
           attribute='class'
           defaultTheme='dark'
         >
-          {children}
+          <CardDataProvider>
+            <div className="relative">
+              <Header />
+              {children}
+              <Footer />
+            </div>
+          </CardDataProvider>
           <Toaster />
         </ThemeProvider>
       </body>
