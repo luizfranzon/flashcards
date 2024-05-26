@@ -1,6 +1,6 @@
 "use client"
 
-import { FormEvent, ReactNode, useContext, useState } from "react"
+import { FormEvent, useContext, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -15,32 +15,41 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "./ui/textarea"
-import { CardData, CardDataContext } from "../context/CardDataContext"
+import { CardDataContext } from "../context/CardDataContext"
 
 interface CreateCardModalProps {
-  children: ReactNode
-  setCardData: (cardData: CardData[]) => void
+  title: string
+  content: string
+  cardId: number
+  isOpen: boolean
+  setIsOpen: (state: boolean) => void
 }
 
-export function CreateCardModal({ children }: CreateCardModalProps) {
+export function EditCardModal({ isOpen, setIsOpen, cardId, title, content }: CreateCardModalProps) {
 
-  const [isOpen, setIsOpen] = useState(false)
   const { cardData, setCardData } = useContext(CardDataContext)
 
-  const [newCardTitle, setNewCardTitle] = useState('')
-  const [newCardContent, setNewCardContent] = useState('')
+  const [newCardTitle, setNewCardTitle] = useState(title)
+  const [newCardContent, setNewCardContent] = useState(content)
 
-  function handleAddNewCard(event: FormEvent) {
+  function handleEditCard(event: FormEvent) {
     event.preventDefault()
     const newCardData = {
-      id: cardData.length + 1 + Math.random(),
+      id: cardId,
       title: newCardTitle,
       content: newCardContent
     }
 
-    setCardData([...cardData, newCardData])
+    const newCardList = cardData.map(card => {
+      if (card.id === cardId) {
+        return newCardData
+      }
+      return card
+    })
 
-    localStorage.setItem('cardData', JSON.stringify([...cardData, newCardData]))
+    setCardData(newCardList)
+
+    localStorage.setItem('cardData', JSON.stringify(newCardList))
 
     setNewCardTitle('')
     setNewCardContent('')
@@ -49,19 +58,16 @@ export function CreateCardModal({ children }: CreateCardModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        {children}
-      </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Criar novo flashcard</DialogTitle>
+          <DialogTitle>Editar flashcard</DialogTitle>
 
           <DialogDescription>
-            Escreva o topíco e o texto que deseja memorizar. <br />Após preencher clique em &apos;&apos;Criar&apos;&apos;.
+            Edite o nome e conteúdo do card.
           </DialogDescription>
 
         </DialogHeader>
-        <form onSubmit={(event) => handleAddNewCard(event)} id="new-card-form" className="grid gap-4">
+        <form onSubmit={(event) => handleEditCard(event)} id="new-card-form" className="grid gap-4">
           <div className="flex flex-col gap-2">
             <Label className="ml-1" htmlFor="title">
               Título:
@@ -87,7 +93,7 @@ export function CreateCardModal({ children }: CreateCardModalProps) {
             />
           </div>
           <DialogFooter>
-            <Button type="submit">Criar</Button>
+            <Button type="submit">Salvar</Button>
           </DialogFooter>
         </form>
 
